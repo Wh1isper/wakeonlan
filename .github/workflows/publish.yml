@@ -71,7 +71,7 @@ jobs:
           override: true
           target: ${{ matrix.target }}
       - name: Install linker
-        if: matrix.build == 'linux' || matrix.build == 'aarch64-linux' || matrix.build == 'mips-linux' || matrix.build == 'mipsel-linux' ||matrix.build == 'mips64el-linux' ||matrix.build == 'mips64-linux'
+        if: matrix.build == 'linux' || matrix.build == 'aarch64-linux' || matrix.build == 'mips-linux' || matrix.build == 'mipsel-linux' ||matrix.build == 'mips64el-linux' || matrix.build == 'mips64-linux' || matrix.build == 'riscv64'
         run: sudo apt-get update && sudo apt-get install ${{ matrix.linker }} -y
       - name: Build binary
         run: cargo build --verbose --release --target ${{ matrix.target }}
@@ -85,16 +85,17 @@ jobs:
       - name: rename binary
         shell: bash
         run: |
+          mkdir -p binary
           if [ "${{ matrix.build }}" = "windows" ]; then
-            cp "../target/${{ matrix.target }}/release/wakeonlan.exe" ./wakeonlan-${{ matrix.target }}.exe
+            cp "./target/${{ matrix.target }}/release/wakeonlan.exe" ./binary/wakeonlan-${{ matrix.target }}.exe
           else
-            cp "../target/${{ matrix.target }}/release/wakeonlan" ./wakeonlan-${{ matrix.target }}
+            cp "./target/${{ matrix.target }}/release/wakeonlan" ./binary/wakeonlan-${{ matrix.target }}
           fi
       - name: Upload binary
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./wakeonlan*
+          file: ./binary/wakeonlan*
           file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
