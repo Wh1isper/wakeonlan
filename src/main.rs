@@ -1,7 +1,6 @@
 // This is from https://github.com/LesnyRumcajs/wakey/tree/master
 // I may write my own later, but this is a good start.
 use clap::Parser;
-use wakey;
 
 #[derive(Parser)]
 #[clap(author, version, about, long_about = None)]
