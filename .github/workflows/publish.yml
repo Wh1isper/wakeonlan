@@ -2,6 +2,8 @@ name: release
 on:
   release:
     types: [published]
+permissions:
+  contents: write
 jobs:
   deploy:
     name: deploy
@@ -63,6 +65,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install linker
+        if: matrix.build == 'linux' || matrix.build == 'aarch64-linux' || matrix.build == 'mips-linux' || matrix.build == 'mipsel-linux' ||matrix.build == 'mips64el-linux' || matrix.build == 'mips64-linux' || matrix.build == 'riscv64'
+        run: sudo apt-get update && sudo apt-get install ${{ matrix.linker }} -y
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -70,9 +76,6 @@ jobs:
           profile: minimal
           override: true
           target: ${{ matrix.target }}
-      - name: Install linker
-        if: matrix.build == 'linux' || matrix.build == 'aarch64-linux' || matrix.build == 'mips-linux' || matrix.build == 'mipsel-linux' ||matrix.build == 'mips64el-linux' || matrix.build == 'mips64-linux' || matrix.build == 'riscv64'
-        run: sudo apt-get update && sudo apt-get install ${{ matrix.linker }} -y
       - name: Build binary
         run: cargo build --verbose --release --target ${{ matrix.target }}
         env:
