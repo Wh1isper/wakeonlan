@@ -4,20 +4,20 @@ linker = "aarch64-linux-gnu-gcc"
 
 [target.mips-unknown-linux-gnu]
 rustflags = ["-C", "target-feature=+crt-static"]
-linker = "gcc-mips-linux-gnu"
+linker = "mips-linux-gnu-gcc"
 
 [target.mipsel-unknown-linux-gnu]
 rustflags = ["-C", "target-feature=+crt-static"]
-linker = "gcc-mipsel-linux-gnu"
+linker = "mipsel-linux-gnu-gcc"
 
 [target.mips64-unknown-linux-gnuabi64]
 rustflags = ["-C", "target-feature=+crt-static"]
-linker = "gcc-mips64-linux-gnuabi64"
+linker = "mips64-linux-gnuabi64-gcc"
 
 [target.mips64el-unknown-linux-gnuabi64]
 rustflags = ["-C", "target-feature=+crt-static"]
-linker = "gcc-mips64el-linux-gnuabi64"
+linker = "mips64el-linux-gnuabi64-gcc"
 
 [target.riscv64gc-unknown-linux-gnu]
 rustflags = ["-C", "target-feature=+crt-static"]
-linker = "gcc-riscv64-linux-gnu"
+linker = "riscv64-linux-gnu-gcc"
